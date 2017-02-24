@@ -1,0 +1,29 @@
+#
+# A Docker image for running validation tests
+#
+# To build:
+#     docker build -t validation_examples:py2 -f Dockerfile_py2 .
+#
+# To run, follow the instructions at
+#     https://github.com/NeuralEnsemble/neuralensemble-docker/blob/master/simulationx/README.md
+
+
+FROM neuralensemble/simulationx:py2
+MAINTAINER andrew.davison@unic.cnrs-gif.fr
+
+USER root
+
+RUN apt-get update; apt-get install -y python-pandas python-bs4
+
+USER docker
+
+RUN $VENV/bin/pip install sciunit
+RUN $VENV/bin/pip install neuronunit
+RUN $VENV/bin/pip install efel
+RUN $VENV/bin/pip uninstall -y neo
+RUN $VENV/bin/pip install https://github.com/NeuralEnsemble/python-neo/archive/master.zip
+
+WORKDIR $HOME
+RUN sed 's/#force_color_prompt/force_color_prompt/' .bashrc > tmp; mv tmp .bashrc
+
+USER root

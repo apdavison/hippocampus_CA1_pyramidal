@@ -1,0 +1,7 @@
+*.o
+*.c
+x86_64
+temp_data
+figs
+.idea
+*.pyc
