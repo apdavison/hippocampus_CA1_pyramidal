@@ -8,11 +8,13 @@ from neuron import h
 class KaliFreund(sciunit.Model,
                  ReceivesCurrent,
                  ProducesMembranePotential):
+    id = "edc328f3-a71f-49c6-bc13-ec280bae1d46"
+    version = "000000"
 
     def __init__(self, name="Kali"):
         """ Constructor. """
 
-        modelpath = "./hippounit/models/hoc_models/Kali_Freund_modell/scppinput/"
+        modelpath = "./models/hoc_models/Kali_Freund_modell/scppinput/"
         libpath = "x86_64/.libs/libnrnmech.so.0"
 
         if os.path.isfile(modelpath + libpath) is False:
@@ -53,7 +55,7 @@ class KaliFreund(sciunit.Model,
 
     def initialise(self):
         # load cell
-        h.load_file("./hippounit/models/hoc_models/Kali_Freund_modell/scppinput/ca1_syn.hoc")
+        h.load_file("./models/hoc_models/Kali_Freund_modell/scppinput/ca1_syn.hoc")
 
     def set_cclamp(self, amp):
 
@@ -195,11 +197,13 @@ class KaliFreund(sciunit.Model,
 class Migliore(sciunit.Model,
                  ReceivesCurrent,
                  ProducesMembranePotential):
+    id = "a96915dd-fa71-41b3-a1e4-af3fc26b7e46"
+    version = "000000"
 
     def __init__(self, name="Migliore"):
         """ Constructor. """
 
-        modelpath = "./hippounit/models/hoc_models/Migliore_Schizophr/"
+        modelpath = "./models/hoc_models/Migliore_Schizophr/"
         libpath = "x86_64/.libs/libnrnmech.so.0"
 
         if os.path.isfile(modelpath + libpath) is False:
@@ -241,7 +245,7 @@ class Migliore(sciunit.Model,
 
     def initialise(self):
         # load cell
-        h.load_file("./hippounit/models/hoc_models/Migliore_Schizophr/basic_sim_9068802-test.hoc")
+        h.load_file("./models/hoc_models/Migliore_Schizophr/basic_sim_9068802-test.hoc")
 
 
     def set_cclamp(self, amp):
@@ -384,7 +388,6 @@ class Migliore(sciunit.Model,
 class Bianchi(sciunit.Model,
                  ReceivesCurrent,
                  ProducesMembranePotential):
-    #id = "c32bcb1d-ef3a-4a4f-b0b4-cd97a1b948cf"
     id = "0947d815-a6e5-4a0a-bc79-6396e65691c0"
     version = "000000"
 
@@ -579,11 +582,13 @@ class Bianchi(sciunit.Model,
 class Golding(sciunit.Model,
                  ReceivesCurrent,
                  ProducesMembranePotential):
+    id = "3613daa6-4f62-4c6c-a0b0-f3a70b6059fc"
+    version = "000000"
 
     def __init__(self, name="Golding"):
         """ Constructor. """
 
-        modelpath = "./hippounit/models/hoc_models/Golding_dichotomy/fig08/"
+        modelpath = "./models/hoc_models/Golding_dichotomy/fig08/"
         libpath = "x86_64/.libs/libnrnmech.so.0"
 
         if os.path.isfile(modelpath + libpath) is False:
@@ -629,7 +634,7 @@ class Golding(sciunit.Model,
 
     def initialise(self):
         # load cell
-        h.load_file("./hippounit/models/hoc_models/Golding_dichotomy/fig08/run_basic.hoc")
+        h.load_file("./models/hoc_models/Golding_dichotomy/fig08/run_basic.hoc")
 
     def set_cclamp(self, amp):
 
