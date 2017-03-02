@@ -4,12 +4,14 @@ import sciunit
 from neuronunit.capabilities import ReceivesCurrent,ProducesMembranePotential
 from quantities import ms,mV,Hz
 from neuron import h
+from hbp_validation_framework.versioning import Versioned
+
 
 class KaliFreund(sciunit.Model,
                  ReceivesCurrent,
-                 ProducesMembranePotential):
+                 ProducesMembranePotential,
+                 Versioned):
     id = "edc328f3-a71f-49c6-bc13-ec280bae1d46"
-    version = "000000"
 
     def __init__(self, name="Kali"):
         """ Constructor. """
@@ -195,10 +197,10 @@ class KaliFreund(sciunit.Model,
         return t, v
 
 class Migliore(sciunit.Model,
-                 ReceivesCurrent,
-                 ProducesMembranePotential):
+               ReceivesCurrent,
+               ProducesMembranePotential,
+               Versioned):
     id = "a96915dd-fa71-41b3-a1e4-af3fc26b7e46"
-    version = "000000"
 
     def __init__(self, name="Migliore"):
         """ Constructor. """
@@ -386,10 +388,10 @@ class Migliore(sciunit.Model,
         return t, v
 
 class Bianchi(sciunit.Model,
-                 ReceivesCurrent,
-                 ProducesMembranePotential):
+              ReceivesCurrent,
+              ProducesMembranePotential,
+              Versioned):
     id = "0947d815-a6e5-4a0a-bc79-6396e65691c0"
-    version = "000000"
 
     def __init__(self, name="Bianchi"):
         """ Constructor. """
@@ -580,10 +582,10 @@ class Bianchi(sciunit.Model,
         return t, v
 
 class Golding(sciunit.Model,
-                 ReceivesCurrent,
-                 ProducesMembranePotential):
+              ReceivesCurrent,
+              ProducesMembranePotential,
+              Versioned):
     id = "3613daa6-4f62-4c6c-a0b0-f3a70b6059fc"
-    version = "000000"
 
     def __init__(self, name="Golding"):
         """ Constructor. """
