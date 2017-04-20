@@ -37,7 +37,9 @@ score = test.judge(model, deep_error=True)
 # Register the result with the HBP Validation service
 # This could be integrated into test.judge() if we extend sciunit appropriately
 collab_folder = "{}_{}".format(config.model, datetime.now().strftime("%Y%m%d-%H%M%S"))
-collab_storage = CollabDataStore(username="adavison",
-                                 collab_id="1771",
-                                 base_folder=collab_folder)
-test_library.register(score, collab_storage)  # score already linked to test and model (I think)
+collab_storage = CollabDataStore(collab_id="1771",
+                                 base_folder=collab_folder,
+                                 auth=test_library.auth)
+test_library.register(score,
+                      project="1771",
+                      data_store=collab_storage)  # score already linked to test and model (I think)
