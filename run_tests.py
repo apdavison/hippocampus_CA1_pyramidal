@@ -25,7 +25,6 @@ model = getattr(models, config.model)()
 # checks the test is registered with the Validation framework,
 # if it is not, fail with instructions for registering,
 # or offer to register it
-test_library = ValidationTestLibrary() # default url for HBP service
 test_library = ValidationTestLibrary(username="adavison") # default url for HBP service
 test = test_library.get_validation_test(config.test,
                                         force_run=False,
