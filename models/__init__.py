@@ -5,6 +5,7 @@ from neuronunit.capabilities import ReceivesCurrent,ProducesMembranePotential
 from quantities import ms,mV,Hz
 from neuron import h
 from hbp_validation_framework.versioning import Versioned
+from .ca1_pyramidal_neuron import CA1PyramidalNeuron
 
 
 class KaliFreund(sciunit.Model,
