@@ -18,14 +18,16 @@ class CA1PyramidalNeuron(sciunit.Model,
                          ReceivesSquareCurrent,
                          ProducesMembranePotential,
                          Runnable):
-    def __init__(self, name=None, id=None, template="CCell", v_init=-80.0, version=None,
+    def __init__(self, name=None, id=None, template="CCell", v_init=-80.0, celsius=34, version=None,
                  working_dir="."):
         sciunit.Model.__init__(self, name=name)
         h.nrn_load_dll(join(working_dir, "mechanisms/x86_64/.libs/libnrnmech.so"))
         h.load_file(join(working_dir, "checkpoints/cell.hoc"))
         self.id = id
         self.version = version
+        self.working_dir = working_dir
         h.v_init = v_init
+        h.celsius = celsius
         self.cell = getattr(h, template)(join(working_dir, "morphology"))
         self.iclamp = h.IClamp(0.5, sec=self.cell.soma[0])
         self.vm = h.Vector()
