@@ -10,9 +10,9 @@ Sequence of steps:
 2) Extract these into their individual folders
 3) Compile ".mod" files in each of the individual "mechanisms" directory
 4) Check if model is already registered in model catalog; if not then register
-5) Collect "model_config" data for each model
-6) Specify "experimental_data" to be used as reference
-7) Create instances of the models and run the tests
+   Also collect "model_config" data for each model
+5) Specify "experimental_data" to be used as reference
+6) Create instances of the models and run the tests
 
 Usage:
 python run_tests_fitted_allzips.py
@@ -72,10 +72,12 @@ for zip_name in zip_names:
 #===============================================================================
 """
 4) Check if model is already registered in model catalog; if not then register
+Also collect "model_config" data for each model
 Note: Model name is considered as the zip name till the last underscore
 """
 model_library = ModelRepository(hbp_username)
 model_catalog = model_library.list_models()
+model_config_list = []
 
 for zip_name in zip_names:
    model_exists = False
@@ -87,42 +89,29 @@ for zip_name in zip_names:
          break
    if model_exists == False:
       print zip_model_name + " : Registering Model in Model Catalog."
-      model_library.register(name=zip_model_name, description="Fill Later",
-                             species="rat", brain_region="hippocampus CA1",
-                             cell_type="pyramidal",
-                             author="Rosanna Migliore, CNR <rosanna.migliore@cnr.it>",
-                             source="	https://github.com/lbologna/bsp_data_repository")
+      model = model_library.register(name=zip_model_name, description="Fill Later",
+                                     species="rat", brain_region="hippocampus CA1",
+                                     cell_type="pyramidal",
+                                     author="Rosanna Migliore, CNR <rosanna.migliore@cnr.it>",
+                                     source="	https://github.com/lbologna/bsp_data_repository")
+
+   with open(base_output_dir+zip_name+"/config/morph.json", 'r') as f_morph, open(base_output_dir+zip_name+"/config/parameters.json", 'r') as f_param:
+      model_template = ast.literal_eval(f_morph.read()).keys()[0]
+      model_dict_temp = {
+                           "id": model["resource_uri"].rsplit('/',1)[1],
+                           "working_dir": base_output_dir+zip_name,
+                           "template": model_template,
+                           "version": zip_name.rsplit('_', 1)[1],
+                           "v_init": -70.0
+                        }
+      model_globals = ast.literal_eval(f_param.read())[model_template]["fixed"]["global"]
+      for key, val in model_globals:
+         model_dict_temp[key] = val
+      model_config_list.append(model_dict_temp)
 
 #===============================================================================
 """
-5) Collect "model_config" data for each model
-(Could be combined with above step; need a method to obtain "model_uri" for
-newly added models, i.e. where model_exists==False)
-"""
-model_config_list = []
-
-for zip_name in zip_names:
-   zip_model_name = zip_name.rsplit('_', 1)[0]
-   for model in model_catalog:
-      if zip_model_name == model["name"]:
-         with open(base_output_dir+zip_name+"/config/morph.json", 'r') as f_morph, open(base_output_dir+zip_name+"/config/parameters.json", 'r') as f_param:
-            model_template = ast.literal_eval(f_morph.read()).keys()[0]
-            model_dict_temp = {
-                                 "id": model["resource_uri"].rsplit('/',1)[1],
-                                 "working_dir": base_output_dir+zip_name,
-                                 "template": model_template,
-                                 "version": zip_name.rsplit('_', 1)[1],
-                                 "v_init": -70.0
-                              }
-            model_globals = ast.literal_eval(f_param.read())[model_template]["fixed"]["global"]
-            for key, val in model_globals:
-               model_dict_temp[key] = val
-            model_config_list.append(model_dict_temp)
-         break
-
-#===============================================================================
-"""
-6) Specify "experimental_data" to be used as reference
+5) Specify "experimental_data" to be used as reference
 """
 experimental_data_list = []
 base_path = "https://github.com/lbologna/bsp_data_repository/raw/master/optimizations/"
@@ -133,7 +122,7 @@ for zip_name in zip_names:
 
 #===============================================================================
 """
-7) Create instances of the models and run the tests
+6) Create instances of the models and run the tests
 """
 for ctr in range(len(model_config_list)):
    pid = os.fork()
